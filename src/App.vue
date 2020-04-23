@@ -4,9 +4,9 @@
     <el-container>
       <el-header>
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">Fast</el-menu-item>
-          <el-menu-item index="2">Movie</el-menu-item>
-          <el-menu-item index="3">Novel</el-menu-item>
+          <el-menu-item index="fast">Fast</el-menu-item>
+          <el-menu-item index="movie">Movie</el-menu-item>
+          <el-menu-item index="novel">Novel</el-menu-item>
 
           <!-- <el-submenu index="2">
             <template slot="title">我的工作台</template>
@@ -37,8 +37,6 @@
 
 <script>
 
-// import { Fast } from './components/Fast'
-
 export default {
   name: 'App',
   data () {
@@ -49,11 +47,13 @@ export default {
   },
   methods: {
     handleSelect (key, keyPath) {
-      console.log('key' + key)
-      // this.$router.push({path: '/fast'})
-      // console.log(key, keyPath)
+      this.$router.push({path: key})
       console.log('keyPath' + keyPath)
+      console.log('this.$route.path' + this.$route.path)
     }
+  },
+  mounted () {
+    this.activeIndex = this.$route.path.substring(1, this.$route.path.length)
   }
 }
 </script>
