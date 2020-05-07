@@ -3,7 +3,7 @@
     <!-- <img src="./assets/logo.png"> -->
     <el-container>
       <el-header>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" class="el-menu-demo bgnone" mode="horizontal" @select="handleSelect">
           <el-menu-item index="fast">Fast</el-menu-item>
           <el-menu-item index="movie">Movie</el-menu-item>
           <el-menu-item index="novel">Novel</el-menu-item>
@@ -27,7 +27,8 @@
         <div class="line"></div>
       </el-header>
       <el-main>
-        <router-view/>
+        <div id="v-content" v-bind:style="{minHeight: Height+'px'}"><router-view /></div>
+        <!-- <router-view/> -->
       </el-main>
       <el-footer>©2020-2021 toryzhoy</el-footer>
     </el-container>
@@ -42,7 +43,7 @@ export default {
   data () {
     return {
       activeIndex: '1',
-      activeIndex2: '1'
+      Height: 0
     }
   },
   methods: {
@@ -54,17 +55,59 @@ export default {
   },
   mounted () {
     this.activeIndex = this.$route.path.substring(1, this.$route.path.length)
+    // 动态设置内容高度 让footer始终居底   header+footer的高度是100
+    this.Height = document.documentElement.clientHeight - 100
+    // 监听浏览器窗口变化
+    window.onresize = () => { this.Height = document.documentElement.clientHeight - 100 }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 0px;
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0px;
+  }
+html,body:{margin:auto}
+
+.bgnone {
+  background-color: transparent
 }
+  .el-header, .el-footer {
+    background-color: #f2f6fc;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
+
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+  }
 </style>
